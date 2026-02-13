@@ -57,9 +57,15 @@ def role_required(*roles):
 def load_user():
     g.user = None
     if "user_id" in session:
-        db = get_db()
-        g.user = db.execute("SELECT * FROM users WHERE id = ?", (session["user_id"],)).fetchone()
-        db.close()
+        demo_users = {
+            1: {"id":1,"username":"coordinator","role":"coordinator"},
+            2: {"id":2,"username":"hod","role":"hod"},
+            3: {"id":3,"username":"dean","role":"dean"},
+            4: {"id":4,"username":"head","role":"head"},
+            5: {"id":5,"username":"admin","role":"admin"},
+        }
+        g.user = demo_users.get(session["user_id"])
+
 
 
 @app.context_processor
