@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="text-2xl font-bold mb-6">Event Details</h2>
+
+<div class="space-y-2">
+    <p><strong>Title:</strong> {{ event.title }}</p>
+    <p><strong>Description:</strong> {{ event.description }}</p>
+    <p><strong>Date:</strong> {{ event.event_date }}</p>
+    <p><strong>Time:</strong> {{ event.start_time }} - {{ event.end_time }}</p>
+    <p><strong>Venue:</strong> {{ event.venue_name }}</p>
+    <p><strong>Status:</strong> {{ event.status }}</p>
+</div>
+
+<h3 class="text-lg font-semibold mt-6">Resources</h3>
+
+{% if resources %}
+<ul class="list-disc ml-6">
+{% for r in resources %}
+<li>{{ r.resource_name }} - {{ r.quantity_requested }}</li>
+{% endfor %}
+</ul>
+{% else %}
+<p>No resources requested.</p>
+{% endif %}
+
+{% if can_approve %}
+<hr class="my-6">
+
+<form method="POST" action="/events/{{ event.id }}/approve" class="mb-4">
+    <input type="text"
+           name="comment"
+           placeholder="Approval comment"
+           class="p-2 border rounded mr-2">
+    <button type="submit"
+            class="bg-green-600 text-white px-4 py-2 rounded">
+        Approve
+    </button>
+</form>
+
+<form method="POST" action="/events/{{ event.id }}/reject">
+    <input type="text"
+           name="reason"
+           placeholder="Rejection reason"
+           class="p-2 border rounded mr-2" required>
+    <button type="submit"
+            class="bg-red-600 text-white px-4 py-2 rounded">
+        Reject
+    </button>
+</form>
+
+{% endif %}
+
+{% if can_complete %}
+<hr class="my-6">
+
+<form method="POST" action="/events/{{ event.id }}/complete">
+    <button type="submit"
+            class="bg-purple-600 text-white px-4 py-2 rounded">
+        Mark as Completed
+    </button>
+</form>
+
+{% endif %}
+
+{% endblock %}

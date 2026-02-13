@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="text-2xl font-bold mb-6">Dashboard</h2>
+
+<div class="grid grid-cols-5 gap-4 mb-8">
+    <div class="bg-blue-100 p-4 rounded text-center">
+        <p class="text-lg font-bold">{{ stats.total }}</p>
+        <p>Total</p>
+    </div>
+    <div class="bg-green-100 p-4 rounded text-center">
+        <p class="text-lg font-bold">{{ stats.approved }}</p>
+        <p>Approved</p>
+    </div>
+    <div class="bg-yellow-100 p-4 rounded text-center">
+        <p class="text-lg font-bold">{{ stats.pending }}</p>
+        <p>Pending</p>
+    </div>
+    <div class="bg-red-100 p-4 rounded text-center">
+        <p class="text-lg font-bold">{{ stats.rejected }}</p>
+        <p>Rejected</p>
+    </div>
+    <div class="bg-purple-100 p-4 rounded text-center">
+        <p class="text-lg font-bold">{{ stats.completed }}</p>
+        <p>Completed</p>
+    </div>
+</div>
+
+<h3 class="text-xl font-semibold mb-4">Events</h3>
+
+{% if events %}
+<table class="w-full border">
+    <tr class="bg-gray-200">
+        <th class="p-2">Title</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+    {% for e in events %}
+    <tr class="border-t">
+        <td class="p-2">{{ e.title }}</td>
+        <td>{{ e.status }}</td>
+        <td>
+            <a href="/events/{{ e.id }}"
+               class="text-indigo-600 hover:underline">
+               View
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No events yet.</p>
+{% endif %}
+
+{% if current_user.role == 'coordinator' %}
+<a href="/events/new"
+   class="inline-block mt-6 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
+   Create New Event
+</a>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Institutional Event Resource Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+
+<!-- NAVBAR -->
+<nav class="bg-indigo-600 text-white p-4 shadow">
+    <div class="max-w-6xl mx-auto flex justify-between">
+        <div class="font-bold text-lg">
+            Event Resource Manager
+        </div>
+
+        {% if current_user %}
+        <div>
+            <span class="mr-4">
+                {{ current_user.full_name }} ({{ role_labels[current_user.role] }})
+            </span>
+            <a href="/" class="mr-4 hover:underline">Dashboard</a>
+            <a href="/logout" class="hover:underline">Logout</a>
+        </div>
+        {% endif %}
+    </div>
+</nav>
+
+<!-- CONTENT -->
+<div class="max-w-6xl mx-auto mt-8 p-6 bg-white shadow rounded-lg">
+    {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>

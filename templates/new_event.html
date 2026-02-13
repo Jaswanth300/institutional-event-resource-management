@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="text-2xl font-bold mb-6">Create New Event</h2>
+
+<form method="POST" class="space-y-4">
+
+    <input type="text" name="title"
+           placeholder="Event Title"
+           class="w-full p-2 border rounded" required>
+
+    <input type="text" name="description"
+           placeholder="Description"
+           class="w-full p-2 border rounded">
+
+    <div class="grid grid-cols-3 gap-4">
+        <input type="date" name="event_date"
+               class="p-2 border rounded" required>
+
+        <input type="time" name="start_time"
+               class="p-2 border rounded" required>
+
+        <input type="time" name="end_time"
+               class="p-2 border rounded" required>
+    </div>
+
+    <input type="number" name="expected_attendees"
+           placeholder="Expected Attendees"
+           class="w-full p-2 border rounded" required>
+
+    <select name="venue_id" class="w-full p-2 border rounded" required>
+        {% for v in venues %}
+        <option value="{{ v.id }}">
+            {{ v.name }} (Capacity: {{ v.capacity }})
+        </option>
+        {% endfor %}
+    </select>
+
+    <h3 class="text-lg font-semibold mt-4">Resources</h3>
+
+    <div class="grid grid-cols-2 gap-4">
+    {% for r in resources %}
+        <div>
+            <label>{{ r.name }} (Available: {{ r.available_quantity }})</label>
+            <input type="number"
+                   name="resource_{{ r.id }}"
+                   value="0"
+                   class="w-full p-2 border rounded">
+        </div>
+    {% endfor %}
+    </div>
+
+    <button type="submit"
+            class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
+        Submit Event
+    </button>
+
+</form>
+
+{% endblock %}
